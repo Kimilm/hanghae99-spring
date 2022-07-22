@@ -31,4 +31,10 @@ public class PersonController {
     public Long updatePerson(@PathVariable Long id, @RequestBody PersonRequestDto requestDto) {
         return personService.update(id, requestDto);
     }
+
+    @DeleteMapping("/api/persons/{id}")
+    public Long deletePerson(@PathVariable Long id) {
+        personRepository.deleteById(id);
+        return id;
+    }
 }
