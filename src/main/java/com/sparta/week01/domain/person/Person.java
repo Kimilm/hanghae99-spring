@@ -1,12 +1,36 @@
 package com.sparta.week01.domain.person;
 
-public class Person {
+import com.sparta.week01.domain.Timestamped;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+@Entity
+@Getter
+@NoArgsConstructor
+public class Person extends Timestamped {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String address;
+
+    @Column(nullable = false)
     private String job;
+
+    @Column(nullable = false)
     private int age;
 
-    public Person() {
+    public Person(PersonRequestDto requestDto) {
+        this.name = requestDto.getName();
+        this.address = requestDto.getAddress();
+        this.job = requestDto.getJob();
+        this.age = requestDto.getAge();
     }
 
     public Person(String name, String address, String job, int age) {
@@ -16,35 +40,10 @@ public class Person {
         this.age = age;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
+    public void update(PersonRequestDto requestDto) {
+        this.name = requestDto.getName();
+        this.address = requestDto.getAddress();
+        this.job = requestDto.getJob();
+        this.age = requestDto.getAge();
     }
 }
