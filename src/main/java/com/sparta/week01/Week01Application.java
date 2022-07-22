@@ -40,6 +40,9 @@ public class Week01Application {
             // 조회해보기
             courseList = repository.findAll();
             courseList.forEach(c -> System.out.println(c.getTitle() + " " + c.getTutor()));
+
+            // 삭제
+            repository.deleteById(1L);
         };
     }
 }
