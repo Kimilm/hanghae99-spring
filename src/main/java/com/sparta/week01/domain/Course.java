@@ -1,9 +1,11 @@
 package com.sparta.week01.domain;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Getter
 @NoArgsConstructor // 기본생성자를 대신 생성해줍니다.
 @Entity // 테이블임을 나타냅니다.
 public class Course extends Timestamped {
@@ -17,18 +19,6 @@ public class Course extends Timestamped {
 
     @Column(nullable = false)
     private String tutor;
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public String getTutor() {
-        return this.tutor;
-    }
 
     public Course(String title, String tutor) {
         this.title = title;
