@@ -43,7 +43,7 @@ public class Week01Application {
             courseList.forEach(c -> System.out.println(c.getTitle() + " " + c.getTutor()));
 
             // 삭제
-            repository.deleteById(1L);
+            // repository.deleteById(1L);
         };
     }
 }
