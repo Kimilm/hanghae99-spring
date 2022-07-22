@@ -3,11 +3,9 @@ package com.sparta.week01.controller;
 import com.sparta.week01.domain.person.Person;
 import com.sparta.week01.domain.person.PersonRequestDto;
 import com.sparta.week01.repository.PersonRepository;
+import com.sparta.week01.service.PersonService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +14,7 @@ import java.util.List;
 public class PersonController {
 
     private final PersonRepository personRepository;
+    private final PersonService personService;
 
     @GetMapping("/api/persons")
     public List<Person> getPerson() {
@@ -26,5 +25,10 @@ public class PersonController {
     public Person createPerson(@RequestBody PersonRequestDto requestDto) {
         Person person = new Person(requestDto);
         return personRepository.save(person);
+    }
+
+    @PutMapping("/api/persons/{id}")
+    public Long updatePerson(@PathVariable Long id, @RequestBody PersonRequestDto requestDto) {
+        return personService.update(id, requestDto);
     }
 }
