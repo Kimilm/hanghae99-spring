@@ -2,6 +2,7 @@ package com.sparta.week01;
 
 import com.sparta.week01.domain.Course;
 import com.sparta.week01.domain.CourseRepository;
+import com.sparta.week01.domain.CourseRequestDto;
 import com.sparta.week01.service.CourseService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -34,8 +35,8 @@ public class Week01Application {
             );
 
             // 업데이트
-            Course newCourse = new Course("웹개발의 봄 Spring", "남병관");
-            service.update(1L, newCourse);
+            CourseRequestDto requestDto = new CourseRequestDto("웹개발의 봄 Spring", "남병관");
+            service.update(1L, requestDto);
 
             // 조회해보기
             courseList = repository.findAll();
