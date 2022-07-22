@@ -34,4 +34,10 @@ public class CourseController {
     public Long updateCourses(@PathVariable Long id, @RequestBody CourseRequestDto requestDto) {
         return courseService.update(id, requestDto);
     }
+
+    @DeleteMapping("/api/courses/{id}")
+    public Long deleteCourses(@PathVariable Long id) {
+        courseRepository.deleteById(id);
+        return id;
+    }
 }
