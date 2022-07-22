@@ -1,4 +1,4 @@
-package com.sparta.week01.prac;
+package com.sparta.week01.domain.person;
 
 public class Person {
     private String name;

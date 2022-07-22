@@ -1,8 +1,8 @@
 package com.sparta.week01.service;
 
-import com.sparta.week01.domain.Course;
-import com.sparta.week01.domain.CourseRepository;
-import com.sparta.week01.domain.CourseRequestDto;
+import com.sparta.week01.domain.course.Course;
+import com.sparta.week01.repository.CourseRepository;
+import com.sparta.week01.domain.course.CourseRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

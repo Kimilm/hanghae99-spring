@@ -1,5 +1,6 @@
-package com.sparta.week01.domain;
+package com.sparta.week01.domain.course;
 
+import com.sparta.week01.domain.Timestamped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
