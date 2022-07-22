@@ -3,11 +3,9 @@ package com.sparta.week01.controller;
 import com.sparta.week01.domain.CourseRepository;
 import com.sparta.week01.domain.Course;
 import com.sparta.week01.domain.CourseRequestDto;
+import com.sparta.week01.service.CourseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +14,7 @@ import java.util.List;
 public class CourseController {
 
     private final CourseRepository courseRepository;
+    private final CourseService courseService;
 
     @GetMapping("/api/courses")
     public List<Course> getCourses() {
@@ -28,5 +27,11 @@ public class CourseController {
         Course course = new Course(requestDto);
 
         return courseRepository.save(course);
+    }
+
+    // {id}로 넘어오는 값을 @PathVariable로 받음
+    @PutMapping("/api/courses/{id}")
+    public Long updateCourses(@PathVariable Long id, @RequestBody CourseRequestDto requestDto) {
+        return courseService.update(id, requestDto);
     }
 }
