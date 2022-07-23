@@ -18,6 +18,10 @@ public class MemoController {
 
     @GetMapping("/api/memos")
     public List<Memo> getMemos() {
+        //최근 24시간 데이터만 가져오기
+        //LocalDateTime start = LocalDateTime.now().minusDays(1);
+        //LocalDateTime end = LocalDateTime.now();
+        //return memoRepository.findAllByModifiedAtBetweenOrderByModifiedAtDesc(start, end);
         return memoRepository.findAllByOrderByModifiedAtDesc();
     }
 
