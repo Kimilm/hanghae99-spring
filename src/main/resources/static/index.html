@@ -269,7 +269,7 @@
                     for (let i = 0; i < response.length; i++) {
                         let message = response[i];
                         let id = message['id'];
-                        let username = message['username'];
+                        let username = message['userName'];
                         let contents = message['contents'];
                         let modifiedAt = message['modifiedAt'];
                         addHTML(id, username, contents, modifiedAt);
@@ -324,7 +324,7 @@
             let username = genRandomName(10);
 
             // 4. 전달할 data JSON으로 만듭니다.
-            let data = {'username': username, 'contents': contents};
+            let data = {'userName': username, 'contents': contents};
 
             // 5. POST /api/memos 에 data를 전달합니다.
             $.ajax({
@@ -351,7 +351,7 @@
             }
 
             // 3. 전달할 data JSON으로 만듭니다.
-            let data = {'username': username, 'contents': contents};
+            let data = {'userName': username, 'contents': contents};
 
             // 4. PUT /api/memos/{id} 에 data를 전달합니다.
             $.ajax({
@@ -400,61 +400,10 @@
         <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30"
                   rows="10"></textarea>
         <!--            <button class="btn btn-danger" onclick="writePost()">작성하기</button>-->
-        <img src="send.png" alt="" onclick="writePost()">
+        <img src="images/send.png" alt="" onclick="writePost()">
     </div>
     <div id="cards-box" class="area-read">
-        <div class="card">
-            <!-- date/username 영역 -->
-            <div class="metadata">
-                <div class="date">
-                    October 10, 2020
-                </div>
-                <div class="username">
-                    anonymous
-                </div>
-            </div>
-            <!-- contents 조회/수정 영역-->
-            <div class="contents">
-                <div id="1-contents" class="text">
-                    dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew
-                </div>
-                <div id="1-editarea" class="edit">
-                    <textarea id="1-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
-                </div>
-            </div>
-            <!-- 버튼 영역-->
-            <div class="footer">
-                <img id="1-edit" class="icon-start-edit" src="edit.png" alt="" onclick="editPost('1')">
-                <img id="1-delete" class="icon-delete" src="delete.png" alt="" onclick="deleteOne('1')">
-                <img id="1-submit" class="icon-end-edit" src="done.png" alt="" onclick="submitEdit('1')">
-            </div>
-        </div>
-        <div class="card">
-            <!-- date/username 영역 -->
-            <div class="metadata">
-                <div class="date">
-                    October 10, 2020
-                </div>
-                <div class="username">
-                    anonymous
-                </div>
-            </div>
-            <!-- contents 조회/수정 영역-->
-            <div class="contents">
-                <div id="1-contents" class="text">
-                    dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew
-                </div>
-                <div id="1-editarea" class="edit">
-                    <textarea id="1-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
-                </div>
-            </div>
-            <!-- 버튼 영역-->
-            <div class="footer">
-                <img id="1-edit" onclick="editPost('1')" class="icon-start-edit" src="edit.png" alt="">
-                <img id="1-delete" onclick="deleteOne('1')" class="icon-delete" src="delete.png" alt="">
-                <img id="1-submit" onclick="submitEdit('1')" class="icon-end-edit" src="done.png" alt="">
-            </div>
-        </div>
+
     </div>
 </div>
 </body>
