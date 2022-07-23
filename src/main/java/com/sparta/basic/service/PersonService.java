@@ -1,8 +1,8 @@
-package com.sparta.week01.service;
+package com.sparta.basic.service;
 
-import com.sparta.week01.domain.person.Person;
-import com.sparta.week01.domain.person.PersonRequestDto;
-import com.sparta.week01.repository.PersonRepository;
+import com.sparta.basic.domain.person.Person;
+import com.sparta.basic.domain.person.PersonRequestDto;
+import com.sparta.basic.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

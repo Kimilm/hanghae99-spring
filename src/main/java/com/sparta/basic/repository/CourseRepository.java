@@ -1,6 +1,6 @@
-package com.sparta.week01.repository;
+package com.sparta.basic.repository;
 
-import com.sparta.week01.domain.course.Course;
+import com.sparta.basic.domain.course.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {

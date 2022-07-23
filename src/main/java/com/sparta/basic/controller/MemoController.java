@@ -1,9 +1,9 @@
-package com.sparta.week01.controller;
+package com.sparta.basic.controller;
 
-import com.sparta.week01.domain.memo.Memo;
-import com.sparta.week01.domain.memo.MemoRequestDto;
-import com.sparta.week01.repository.MemoRepository;
-import com.sparta.week01.service.MemoService;
+import com.sparta.basic.domain.memo.Memo;
+import com.sparta.basic.domain.memo.MemoRequestDto;
+import com.sparta.basic.repository.MemoRepository;
+import com.sparta.basic.service.MemoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

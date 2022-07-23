@@ -1,6 +1,6 @@
-package com.sparta.week01.domain.memo;
+package com.sparta.basic.domain.memo;
 
-import com.sparta.week01.domain.Timestamped;
+import com.sparta.basic.domain.Timestamped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

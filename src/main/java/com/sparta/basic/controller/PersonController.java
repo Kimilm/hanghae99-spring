@@ -1,9 +1,9 @@
-package com.sparta.week01.controller;
+package com.sparta.basic.controller;
 
-import com.sparta.week01.domain.person.Person;
-import com.sparta.week01.domain.person.PersonRequestDto;
-import com.sparta.week01.repository.PersonRepository;
-import com.sparta.week01.service.PersonService;
+import com.sparta.basic.domain.person.Person;
+import com.sparta.basic.domain.person.PersonRequestDto;
+import com.sparta.basic.repository.PersonRepository;
+import com.sparta.basic.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

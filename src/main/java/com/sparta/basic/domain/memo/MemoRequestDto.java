@@ -1,4 +1,4 @@
-package com.sparta.week01.domain.memo;
+package com.sparta.basic.domain.memo;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

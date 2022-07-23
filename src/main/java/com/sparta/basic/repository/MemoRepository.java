@@ -1,6 +1,6 @@
-package com.sparta.week01.repository;
+package com.sparta.basic.repository;
 
-import com.sparta.week01.domain.memo.Memo;
+import com.sparta.basic.domain.memo.Memo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;

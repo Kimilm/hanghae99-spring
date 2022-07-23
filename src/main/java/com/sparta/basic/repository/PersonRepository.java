@@ -1,6 +1,6 @@
-package com.sparta.week01.repository;
+package com.sparta.basic.repository;
 
-import com.sparta.week01.domain.person.Person;
+import com.sparta.basic.domain.person.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {

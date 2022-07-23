@@ -1,4 +1,4 @@
-package com.sparta.week01.domain.course;
+package com.sparta.basic.domain.course;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

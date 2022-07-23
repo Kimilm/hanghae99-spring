@@ -1,9 +1,9 @@
-package com.sparta.week01.controller;
+package com.sparta.basic.controller;
 
-import com.sparta.week01.repository.CourseRepository;
-import com.sparta.week01.domain.course.Course;
-import com.sparta.week01.domain.course.CourseRequestDto;
-import com.sparta.week01.service.CourseService;
+import com.sparta.basic.repository.CourseRepository;
+import com.sparta.basic.domain.course.Course;
+import com.sparta.basic.domain.course.CourseRequestDto;
+import com.sparta.basic.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

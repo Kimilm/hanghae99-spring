@@ -1,11 +1,11 @@
-package com.sparta.week01;
+package com.sparta.basic;
 
-import com.sparta.week01.domain.course.Course;
-import com.sparta.week01.domain.person.Person;
-import com.sparta.week01.repository.CourseRepository;
-import com.sparta.week01.domain.course.CourseRequestDto;
-import com.sparta.week01.repository.PersonRepository;
-import com.sparta.week01.service.CourseService;
+import com.sparta.basic.domain.course.Course;
+import com.sparta.basic.domain.person.Person;
+import com.sparta.basic.repository.CourseRepository;
+import com.sparta.basic.domain.course.CourseRequestDto;
+import com.sparta.basic.repository.PersonRepository;
+import com.sparta.basic.service.CourseService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,9 +16,9 @@ import java.util.List;
 
 @EnableJpaAuditing
 @SpringBootApplication
-public class Week01Application {
+public class SpringBasicApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Week01Application.class, args);
+        SpringApplication.run(SpringBasicApplication.class, args);
     }
 
     // Week02Application.java 의 main 함수 아래에 붙여주세요.
