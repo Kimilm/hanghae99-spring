@@ -2,4 +2,5 @@ rootProject.name = 'basic'
 include 'springboot-basic'
 include 'timeline-memo'
 include 'web'
+include 'selectshop'
 

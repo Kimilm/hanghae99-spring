@@ -9,4 +9,5 @@ jar {
 dependencies {
     implementation project(':springboot-basic')
     implementation project(':timeline-memo')
+    implementation project(':selectshop')
 }
