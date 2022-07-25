@@ -1,9 +1,8 @@
 package com.sparta.selectshop.models.product;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.sparta.selectshop.repository.ProductRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.persistence.*;
 
@@ -29,4 +28,12 @@ public class Product {
 
     @Column(nullable = false)
     private int myprice;
+
+    public Product(ProductRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.link = requestDto.getLink();
+        this.lprice = requestDto.getLprice();
+        this.image = requestDto.getImage();
+        this.myprice = 0;
+    }
 }
