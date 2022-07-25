@@ -7,8 +7,10 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 @Component
@@ -36,8 +38,8 @@ public class NaverShopSearch {
         JSONObject rjson = new JSONObject(result);
         JSONArray items = rjson.getJSONArray("items");
 
-        return StreamSupport.stream(items.spliterator(), false)
-                .map(JSONObject::new)
+        return IntStream.range(0, items.length())
+                .mapToObj(items::getJSONObject)
                 .map(ItemDto::new)
                 .collect(Collectors.toList());
     }
