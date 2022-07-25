@@ -1,5 +1,6 @@
 package com.sparta.selectshop.service;
 
+import com.sparta.selectshop.models.item.ItemDto;
 import com.sparta.selectshop.models.product.Product;
 import com.sparta.selectshop.models.product.ProductMypriceRequestDto;
 import com.sparta.selectshop.repository.ProductRepository;
@@ -20,6 +21,15 @@ public class ProductService {
                 () -> new NullPointerException("아이디가 존재하지 않습니다.")
         );
         product.update(requestDto);
+        return id;
+    }
+
+    @Transactional
+    public Long updateBySearch(Long id, ItemDto itemDto) {
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("아이디가 존재하지 않습니다.")
+        );
+        product.updateByItemDto(itemDto);
         return id;
     }
 }

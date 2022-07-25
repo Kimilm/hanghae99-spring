@@ -1,5 +1,6 @@
 package com.sparta.selectshop.models.product;
 
+import com.sparta.selectshop.models.item.ItemDto;
 import com.sparta.selectshop.repository.ProductRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,5 +40,9 @@ public class Product {
 
     public void update(ProductMypriceRequestDto requestDto) {
         myprice = requestDto.getMyprice();
+    }
+
+    public void updateByItemDto(ItemDto itemDto) {
+        this.lprice = itemDto.getLprice();
     }
 }
