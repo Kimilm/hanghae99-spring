@@ -4,12 +4,14 @@ import com.sparta.selectshop.models.item.ItemDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Component
 public class NaverShopSearch {
     public String search(String query) {
         RestTemplate rest = new RestTemplate();
