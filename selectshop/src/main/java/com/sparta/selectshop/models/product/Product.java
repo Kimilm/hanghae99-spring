@@ -36,4 +36,8 @@ public class Product {
         this.image = requestDto.getImage();
         this.myprice = 0;
     }
+
+    public void update(ProductMypriceRequestDto requestDto) {
+        myprice = requestDto.getMyprice();
+    }
 }
