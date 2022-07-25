@@ -1,10 +1,17 @@
 package com.sparta.selectshop.utils;
 
+import com.sparta.selectshop.models.item.ItemDto;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 public class NaverShopSearch {
-    public String search() {
+    public String search(String query) {
         RestTemplate rest = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Naver-Client-Id", "dYcmy4nYJp_nYTiXNh6s");
@@ -12,7 +19,7 @@ public class NaverShopSearch {
 
         String body = "";
         HttpEntity<String> requestEntity = new HttpEntity<String>(body, headers);
-        ResponseEntity<String> responseEntity = rest.exchange("https://openapi.naver.com/v1/search/shop.json?query=아디다스", HttpMethod.GET, requestEntity, String.class);
+        ResponseEntity<String> responseEntity = rest.exchange("https://openapi.naver.com/v1/search/shop.json?query=" + query, HttpMethod.GET, requestEntity, String.class);
         HttpStatus httpStatus = responseEntity.getStatusCode();
 
         int status = httpStatus.value();
@@ -23,8 +30,13 @@ public class NaverShopSearch {
         return response;
     }
 
-    public static void main(String[] args) {
-        NaverShopSearch naverShopSearch = new NaverShopSearch();
-        naverShopSearch.search();
+    public List<ItemDto> fromJsonToItems(String result) {
+        JSONObject rjson = new JSONObject(result);
+        JSONArray items = rjson.getJSONArray("items");
+
+        return StreamSupport.stream(items.spliterator(), false)
+                .map(JSONObject::new)
+                .map(ItemDto::new)
+                .collect(Collectors.toList());
     }
 }
