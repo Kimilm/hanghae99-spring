@@ -26,8 +26,12 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        // 회원 관리 처리 API (POST /user/**) 에 대해 CSRF 무시
-        httpSecurity.csrf().ignoringAntMatchers("/user/**");
+        httpSecurity.csrf()
+                // 회원 관리 처리 API (POST /user/**) 에 대해 CSRF 무시
+                .ignoringAntMatchers("/user/**")
+                // products 요청 API CSRF 무시
+                .ignoringAntMatchers("/api/products/**");;
+
 
         httpSecurity.authorizeHttpRequests(authz -> authz
                         // image 폴더를 login 없이 허용
