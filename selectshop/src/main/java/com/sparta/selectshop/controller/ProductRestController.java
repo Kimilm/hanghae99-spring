@@ -3,10 +3,12 @@ package com.sparta.selectshop.controller;
 import com.sparta.selectshop.models.product.Product;
 import com.sparta.selectshop.models.product.ProductMypriceRequestDto;
 import com.sparta.selectshop.models.product.ProductRequestDto;
+import com.sparta.selectshop.models.user.UserRoleEnum;
 import com.sparta.selectshop.repository.ProductRepository;
 import com.sparta.selectshop.security.model.UserDetailsImpl;
 import com.sparta.selectshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,7 @@ public class ProductRestController {
 
     private final ProductService productService;
 
+    @Secured(value = UserRoleEnum.Authority.ADMIN)
     @GetMapping("/api/admin/products")
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
