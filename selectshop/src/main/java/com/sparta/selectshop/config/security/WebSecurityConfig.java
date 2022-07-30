@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -11,7 +12,16 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        // h2-console 사용에 대한 허용 (CSRF, FrameOptions 무시)
+        return (web) -> web.ignoring().antMatchers("/h2-console/**");
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        // 회원 관리 처리 API (POST /user/**) 에 대해 CSRF 무시
+        httpSecurity.csrf().ignoringAntMatchers("/user/**");
+
         httpSecurity.authorizeHttpRequests(authz -> authz
                         // image 폴더를 login 없이 허용
                         .antMatchers("/images/**").permitAll()
