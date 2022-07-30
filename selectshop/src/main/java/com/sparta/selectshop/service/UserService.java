@@ -5,6 +5,7 @@ import com.sparta.selectshop.models.user.User;
 import com.sparta.selectshop.models.user.UserRoleEnum;
 import com.sparta.selectshop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,7 +13,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+
     private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
 
     public void registerUser(SignupRequestDto requestDto) {
@@ -23,7 +26,9 @@ public class UserService {
             throw new IllegalArgumentException("중복된 ID 사용자가 존재합니다");
         }
 
-        String password = requestDto.getPassword();
+        // 패스워드 암호화
+        String password = passwordEncoder.encode(requestDto.getPassword());
+
         String email = requestDto.getEmail();
         UserRoleEnum role = UserRoleEnum.USER;
 
