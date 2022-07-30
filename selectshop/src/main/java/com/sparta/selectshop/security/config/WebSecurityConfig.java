@@ -2,6 +2,8 @@ package com.sparta.selectshop.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -10,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
     // 암호화 알고리즘 빈 등록
@@ -53,7 +56,11 @@ public class WebSecurityConfig {
                 .and()
                 .logout()
                 .logoutUrl("/user/logout")  // GET
-                .permitAll();
+                .permitAll()
+                // 접근 불가 페이지 설정
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/forbidden.html");
 
         return httpSecurity.build();
     }
