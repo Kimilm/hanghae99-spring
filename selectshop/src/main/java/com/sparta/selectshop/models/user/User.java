@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Entity(name = "users")
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class User extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,10 +28,10 @@ public class User extends Timestamped {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
-    public User(SignupRequestDto requestDto) {
-        this.username = requestDto.getUsername();
-        this.password = requestDto.getPassword();
-        this.email = requestDto.getEmail();
-        this.role = requestDto.getRole();
+    public User(String username, String password, String email, UserRoleEnum role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
     }
 }
