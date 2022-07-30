@@ -8,6 +8,6 @@ public class ProductController {
 
     @GetMapping("/selectshop")
     public String selectShop() {
-        return "selectshop.html";
+        return "selectshop";
     }
 }
