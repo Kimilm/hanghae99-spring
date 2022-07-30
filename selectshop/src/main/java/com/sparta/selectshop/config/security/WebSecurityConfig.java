@@ -14,7 +14,9 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(authz -> authz.anyRequest().authenticated())
                 .formLogin()
+                .loginPage("/user/login")
                 .defaultSuccessUrl("/")
+                .failureUrl("/user/login?error")
                 .permitAll()
                 .and()
                 .logout()
