@@ -1,4 +1,4 @@
-package com.sparta.selectshop.config.security;
+package com.sparta.selectshop.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,13 +40,15 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated())
                 // 로그인 기능 허용
                 .formLogin()
-                .loginPage("/user/login")
+                .loginPage("/user/login")   // GET
+                .loginProcessingUrl("/user/login")  // POST
                 .defaultSuccessUrl("/selectshop")
                 .failureUrl("/user/login?error")
                 .permitAll()
                 // 로그아웃 기능 허용
                 .and()
                 .logout()
+                .logoutUrl("/user/logout")  // GET
                 .permitAll();
 
         return httpSecurity.build();
