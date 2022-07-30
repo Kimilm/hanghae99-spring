@@ -12,12 +12,20 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(authz -> authz.anyRequest().authenticated())
+        httpSecurity.authorizeHttpRequests(authz -> authz
+                        // image 폴더를 login 없이 허용
+                        .antMatchers("/images/**").permitAll()
+                        // css 폴더를 login 없이 허용
+                        .antMatchers("/css/**").permitAll()
+                        // 어떤 요청이든 '인증'
+                        .anyRequest().authenticated())
+                // 로그인 기능 허용
                 .formLogin()
                 .loginPage("/user/login")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/selectshop")
                 .failureUrl("/user/login?error")
                 .permitAll()
+                // 로그아웃 기능 허용
                 .and()
                 .logout()
                 .permitAll();
