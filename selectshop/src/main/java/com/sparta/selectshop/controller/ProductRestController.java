@@ -4,8 +4,10 @@ import com.sparta.selectshop.models.product.Product;
 import com.sparta.selectshop.models.product.ProductMypriceRequestDto;
 import com.sparta.selectshop.models.product.ProductRequestDto;
 import com.sparta.selectshop.repository.ProductRepository;
+import com.sparta.selectshop.security.model.UserDetailsImpl;
 import com.sparta.selectshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,18 +16,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductRestController {
 
-    private final ProductRepository productRepository;
     private final ProductService productService;
 
     @GetMapping("/api/products")
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public List<Product> getProducts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getUser().getId();
+        return productService.getProducts(userId);
     }
 
     @PostMapping("/api/products")
-    public Product createProduct(@RequestBody ProductRequestDto requestDto) {
-        Product product = new Product(requestDto);
-        return productRepository.save(product);
+    public Product createProduct(@RequestBody ProductRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getUser().getId();
+        Product product = productService.createProduct(requestDto, userId);
+        return product;
     }
 
     @PutMapping("/api/products/{id}")
