@@ -18,6 +18,11 @@ public class ProductRestController {
 
     private final ProductService productService;
 
+    @GetMapping("/api/admin/products")
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
+    }
+
     @GetMapping("/api/products")
     public List<Product> getProducts(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         Long userId = userDetails.getUser().getId();

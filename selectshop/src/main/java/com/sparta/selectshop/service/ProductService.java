@@ -42,4 +42,8 @@ public class ProductService {
         product.updateByItemDto(itemDto);
         return id;
     }
+
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
 }
