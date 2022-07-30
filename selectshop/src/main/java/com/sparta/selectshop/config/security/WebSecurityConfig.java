@@ -34,6 +34,8 @@ public class WebSecurityConfig {
                         .antMatchers("/images/**").permitAll()
                         // css 폴더를 login 없이 허용
                         .antMatchers("/css/**").permitAll()
+                        // 회원 관리 처리 API 모두 login 없이 허용
+                        .antMatchers("/user/**").permitAll()
                         // 어떤 요청이든 '인증'
                         .anyRequest().authenticated())
                 // 로그인 기능 허용
