@@ -30,12 +30,16 @@ public class Product {
     @Column(nullable = false)
     private int myprice;
 
-    public Product(ProductRequestDto requestDto) {
+    @Column(nullable = false)
+    private Long userId;
+
+    public Product(ProductRequestDto requestDto, Long userId) {
         this.title = requestDto.getTitle();
         this.link = requestDto.getLink();
         this.lprice = requestDto.getLprice();
         this.image = requestDto.getImage();
         this.myprice = 0;
+        this.userId = userId;
     }
 
     public void update(ProductMypriceRequestDto requestDto) {
