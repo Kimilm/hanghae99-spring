@@ -1,11 +1,13 @@
 package com.sparta.selectshop.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sparta.selectshop.models.user.SignupRequestDto;
 import com.sparta.selectshop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,6 +24,13 @@ public class UserController {
     @GetMapping("/user/signup")
     public String signup() {
         return "signup";
+    }
+
+    // 카카오 인가코드 처리
+    @GetMapping("/user/kakao/callback")
+    public String kakaoLogin(@RequestParam String code) throws JsonProcessingException {
+        userService.kakaoLogin(code);
+        return "redirect:/selectshop";
     }
 
     // 회원가입 요청 처리
