@@ -29,8 +29,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class KakaoUserService {
 
-    private PasswordEncoder passwordEncoder;
-    private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     public void kakaoLogin(String code) throws JsonProcessingException {
         // 인가코드로 엑세스토큰 요청
@@ -76,7 +76,7 @@ public class KakaoUserService {
     private KakaoUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
         // http header
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer" + accessToken);
+        headers.add("Authorization", "Bearer " + accessToken);
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         // http request send
@@ -97,7 +97,7 @@ public class KakaoUserService {
 
         Long id = jsonNode.get("id").asLong();
         String nickname = jsonNode.get("properties").get("nickname").asText();
-        String email = jsonNode.get("kakao_acount").get("email").asText();
+        String email = jsonNode.get("kakao_account").get("email").asText();
 
         System.out.println("kakao user info: " + id + ", " + nickname + ", " + email);
 
@@ -115,7 +115,7 @@ public class KakaoUserService {
             String password = UUID.randomUUID().toString();
             String encodedPassword = passwordEncoder.encode(password);
 
-            String email = kakaoUser.getEmail();
+            String email = kakaoUserInfo.getEmail();
             UserRoleEnum role = UserRoleEnum.USER;
 
             kakaoUser = userRepository.save(new User(nickname, encodedPassword, email, role, kakaoId));
