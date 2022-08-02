@@ -1,6 +1,5 @@
 package com.sparta.selectshop.controller;
 
-import com.sparta.selectshop.models.ApiUseTime;
 import com.sparta.selectshop.models.product.Product;
 import com.sparta.selectshop.models.product.ProductMypriceRequestDto;
 import com.sparta.selectshop.models.product.ProductRequestDto;
@@ -10,13 +9,11 @@ import com.sparta.selectshop.repository.ApiUseTimeRepository;
 import com.sparta.selectshop.security.model.UserDetailsImpl;
 import com.sparta.selectshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class ProductRestController {
@@ -27,10 +24,11 @@ public class ProductRestController {
 
     /**
      * (관리자용) 전체 상품 조회
-     * @param page      페이지 번호
-     * @param size      한 페이지 아이템 수
-     * @param sortBy    정렬 기준
-     * @param isAsc     true: 오름차순 / false: 내림차순
+     *
+     * @param page   페이지 번호
+     * @param size   한 페이지 아이템 수
+     * @param sortBy 정렬 기준
+     * @param isAsc  true: 오름차순 / false: 내림차순
      */
     @Secured(value = UserRoleEnum.Authority.ADMIN)
     @GetMapping("/api/admin/products")
@@ -61,35 +59,11 @@ public class ProductRestController {
     // 신규 상품 등록
     @PostMapping("/api/products")
     public Product createProduct(@RequestBody ProductRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        long startTime = System.currentTimeMillis();
-
-        try {
-            Long userId = userDetails.getUser().getId();
-            Product product = productService.createProduct(requestDto, userId);
-            return product;
-        } finally {
-            long endTime = System.currentTimeMillis();
-
-            long runTime = endTime - startTime;
-
-            User loginUser = userDetails.getUser();
-
-            // API 사용 시간 DB 기록
-            ApiUseTime apiUseTime = apiUseTimeRepository.findByUser(loginUser).orElse(null);
-
-            if (apiUseTime == null) {
-                apiUseTime = new ApiUseTime(loginUser, runTime);
-            } else {
-                apiUseTime.addUseTime(runTime);
-            }
-
-            log.info("[API Use Time] username: " + loginUser.getUsername());
-
-            apiUseTimeRepository.save(apiUseTime);
-        }
-
-
+        Long userId = userDetails.getUser().getId();
+        Product product = productService.createProduct(requestDto, userId);
+        return product;
     }
+
 
     // 설정 가격 변경
     @PutMapping("/api/products/{id}")

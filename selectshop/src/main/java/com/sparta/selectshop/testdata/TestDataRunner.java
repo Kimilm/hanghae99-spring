@@ -13,6 +13,10 @@ import com.sparta.selectshop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -46,6 +50,11 @@ public class TestDataRunner implements ApplicationRunner {
         testUser1 = userRepository.save(testUser1);
         testUser2 = userRepository.save(testUser2);
         testAdminUser1 = userRepository.save(testAdminUser1);
+
+        // testUser1 강제 로그인 처리
+        UserDetails userDetails = new UserDetailsImpl(testUser1);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         List<User> testUserList = new ArrayList<>();
 
