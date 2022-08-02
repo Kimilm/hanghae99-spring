@@ -2,15 +2,14 @@ package com.sparta.selectshop.controller;
 
 import com.sparta.selectshop.models.folder.Folder;
 import com.sparta.selectshop.models.folder.FolderRequestDto;
+import com.sparta.selectshop.models.product.Product;
 import com.sparta.selectshop.models.user.User;
 import com.sparta.selectshop.security.model.UserDetailsImpl;
 import com.sparta.selectshop.service.FolderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,5 +36,26 @@ public class FolderRestController {
     @GetMapping("/api/folders")
     public List<Folder> getFolders(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return folderService.getUserFolders(userDetails.getUser());
+    }
+
+    // 회원이 등록한 폴더 내 모든 상품 조회
+    @GetMapping("/api/folders/{folderId}/products")
+    public Page<Product> getProductsInFolder(
+            @PathVariable Long folderId,
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") boolean isAsc,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        page = page - 1;
+        return folderService.getProductsInFolder(
+                folderId,
+                page,
+                size,
+                sortBy,
+                isAsc,
+                userDetails.getUser()
+        );
     }
 }
