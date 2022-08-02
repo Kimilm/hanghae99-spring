@@ -7,6 +7,7 @@ import com.sparta.selectshop.security.model.UserDetailsImpl;
 import com.sparta.selectshop.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,5 +31,11 @@ public class FolderRestController {
 
         List<Folder> folders = folderService.addFolders(folderNames, user);
         return folders;
+    }
+
+    // 유저가 생성한 모든 폴더 조회
+    @GetMapping("/api/folders")
+    public List<Folder> getFolders(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return folderService.getUserFolders(userDetails.getUser());
     }
 }
