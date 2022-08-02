@@ -2,7 +2,6 @@ package com.sparta.selectshop.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,7 +32,7 @@ public class WebSecurityConfig {
                 // 회원 관리 처리 API (POST /user/**) 에 대해 CSRF 무시
                 .ignoringAntMatchers("/user/**")
                 // products 요청 API CSRF 무시
-                .ignoringAntMatchers("/api/products/**");;
+                .ignoringAntMatchers("/api/products/**");
 
 
         httpSecurity.authorizeHttpRequests(authz -> authz
