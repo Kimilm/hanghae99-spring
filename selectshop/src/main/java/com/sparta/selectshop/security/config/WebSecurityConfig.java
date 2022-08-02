@@ -32,7 +32,9 @@ public class WebSecurityConfig {
                 // 회원 관리 처리 API (POST /user/**) 에 대해 CSRF 무시
                 .ignoringAntMatchers("/user/**")
                 // products 요청 API CSRF 무시
-                .ignoringAntMatchers("/api/products/**");
+                .ignoringAntMatchers("/api/products/**")
+                // folder 요청 API CSRF 무시
+                .ignoringAntMatchers("/api/folders/**");
 
 
         httpSecurity.authorizeHttpRequests(authz -> authz
