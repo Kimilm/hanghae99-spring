@@ -1,7 +1,7 @@
 package com.sparta.selectshop.models.product;
 
+import com.sparta.selectshop.models.Timestamped;
 import com.sparta.selectshop.models.item.ItemDto;
-import com.sparta.selectshop.repository.ProductRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Product {
+public class Product extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

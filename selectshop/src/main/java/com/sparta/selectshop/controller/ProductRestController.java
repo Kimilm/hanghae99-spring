@@ -33,7 +33,8 @@ public class ProductRestController {
             @RequestParam("sortBy") String sortBy,
             @RequestParam("isAsc") boolean isAsc
     ) {
-        return productService.getAllProducts();
+        page = page - 1;
+        return productService.getAllProducts(page, size, sortBy, isAsc);
     }
 
     // 로그인한 회원이 등록한 관심 상품 조회
@@ -46,7 +47,8 @@ public class ProductRestController {
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         Long userId = userDetails.getUser().getId();
-        return productService.getProducts(userId);
+        page = page - 1;
+        return productService.getProducts(page, size, sortBy, isAsc, userId);
     }
 
     // 신규 상품 등록
