@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,21 +28,25 @@ public class FolderService {
     }
 
     // 유저 아이디로 폴더 생성
+    @Transactional
     public List<Folder> addFolders(List<String> folderNames, User user) {
         // 유저의 입력값에서 중복 제거
         folderNames = folderNames.stream().distinct().collect(Collectors.toList());
         // 회원이 기존에 생성한 폴더 리스트
         List<Folder> existFolderList = folderRepository.findAllByUserAndNameIn(user, folderNames);
-        List<Folder> folderList = new ArrayList<>();
+        List<Folder> savedfolderList = new ArrayList<>();
 
         for (String folderName : folderNames) {
-            if (!isExistFolderName(folderName, existFolderList)) {
-                Folder folder = new Folder(folderName, user);
-                folderList.add(folder);
+            if (isExistFolderName(folderName, existFolderList)) {
+                throw new IllegalArgumentException("중복된 폴더 이름을 제거해주세요. 폴더명: " + folderName);
+            } else {
+                // 폴더 저장
+                Folder folder = folderRepository.save(new Folder(folderName, user));
+                savedfolderList.add(folder);
             }
         }
 
-        return folderRepository.saveAll(folderList);
+        return savedfolderList;
     }
 
     // 회원ID가 소유한 폴더에 저장되어있는 상품들 조회
@@ -56,7 +61,7 @@ public class FolderService {
         Pageable pageable = PageUtils.createPageRequest(page, size, sortBy, isAsc);
         return productRepository.findAllByUserIdAndFolderList_Id(user.getId(), folderId, pageable);
     }
-    
+
     private boolean isExistFolderName(String folderName, List<Folder> existFolderList) {
         for (Folder folder : existFolderList) {
             if (folder.getName().equals(folderName)) {
