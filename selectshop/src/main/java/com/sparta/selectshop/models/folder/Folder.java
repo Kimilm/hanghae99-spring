@@ -14,14 +14,14 @@ public class Folder extends Timestamped {
     @Id
     @Column(name = "FOLDER_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long id;
+    private Long id;
 
     @Column(nullable = false)
-    public String name;
+    private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
-    public User user;
+    private User user;
 
     public Folder(String name, User user) {
         this.name = name;

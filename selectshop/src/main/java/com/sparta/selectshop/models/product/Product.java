@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,8 +38,7 @@ public class Product extends Timestamped {
     private Long userId;
 
     @ManyToMany
-    @JoinColumn(name = "FOLDER_ID")
-    private List<Folder> folderList;
+    private List<Folder> folderList = new ArrayList<>();
 
     public Product(ProductRequestDto requestDto, Long userId) {
         this.title = requestDto.getTitle();

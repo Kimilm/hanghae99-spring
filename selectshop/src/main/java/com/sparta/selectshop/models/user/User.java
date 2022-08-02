@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "users")
@@ -35,9 +36,8 @@ public class User extends Timestamped {
     @Column(unique = true)
     private Long kakaoId;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "FOLDER_ID")
-    private List<Folder> folders;
+    @OneToMany
+    private List<Folder> folders = new ArrayList<>();
 
     public User(String username, String password, String email, UserRoleEnum role) {
         this.username = username;
