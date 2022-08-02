@@ -1,19 +1,20 @@
 package com.sparta.selectshop.controller;
 
+import com.sparta.selectshop.exception.RestApiException;
 import com.sparta.selectshop.models.folder.Folder;
 import com.sparta.selectshop.models.folder.FolderRequestDto;
-import com.sparta.selectshop.models.folder.FolderResponseDto;
 import com.sparta.selectshop.models.product.Product;
 import com.sparta.selectshop.models.user.User;
 import com.sparta.selectshop.security.model.UserDetailsImpl;
 import com.sparta.selectshop.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,18 +24,24 @@ public class FolderRestController {
 
     // 폴더 생성
     @PostMapping("/api/folders")
-    public List<FolderResponseDto> addFolders(
+    public ResponseEntity<?> addFolders(
             @RequestBody FolderRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        List<String> folderNames = requestDto.getFolderNames();
-        User user = userDetails.getUser();
+        try {
+            List<String> folderNames = requestDto.getFolderNames();
+            User user = userDetails.getUser();
 
-        List<FolderResponseDto> folders = folderService.addFolders(folderNames, user).stream()
-                .map(FolderResponseDto::new)
-                .collect(Collectors.toList());
+            List<Folder> folders = folderService.addFolders(folderNames, user);
 
-        return folders;
+            return ResponseEntity.ok(folders);
+        } catch (IllegalArgumentException ex) {
+            RestApiException restApiException = new RestApiException();
+            restApiException.setHttpStatus(HttpStatus.BAD_REQUEST);
+            restApiException.setErrorMessge(ex.getMessage());
+
+            return ResponseEntity.badRequest().body(restApiException);
+        }
     }
 
     // 유저가 생성한 모든 폴더 조회
