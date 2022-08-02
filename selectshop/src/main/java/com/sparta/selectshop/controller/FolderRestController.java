@@ -3,6 +3,7 @@ package com.sparta.selectshop.controller;
 import com.sparta.selectshop.exception.RestApiException;
 import com.sparta.selectshop.models.folder.Folder;
 import com.sparta.selectshop.models.folder.FolderRequestDto;
+import com.sparta.selectshop.models.folder.FolderResponseDto;
 import com.sparta.selectshop.models.product.Product;
 import com.sparta.selectshop.models.user.User;
 import com.sparta.selectshop.security.model.UserDetailsImpl;
@@ -15,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,20 +30,14 @@ public class FolderRestController {
             @RequestBody FolderRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
-        try {
-            List<String> folderNames = requestDto.getFolderNames();
-            User user = userDetails.getUser();
+        List<String> folderNames = requestDto.getFolderNames();
+        User user = userDetails.getUser();
 
-            List<Folder> folders = folderService.addFolders(folderNames, user);
+        List<FolderResponseDto> folders = folderService.addFolders(folderNames, user).stream()
+                .map(FolderResponseDto::new)
+                .collect(Collectors.toList());
 
-            return ResponseEntity.ok(folders);
-        } catch (IllegalArgumentException ex) {
-            RestApiException restApiException = new RestApiException();
-            restApiException.setHttpStatus(HttpStatus.BAD_REQUEST);
-            restApiException.setErrorMessge(ex.getMessage());
-
-            return ResponseEntity.badRequest().body(restApiException);
-        }
+        return ResponseEntity.ok(folders);
     }
 
     // 유저가 생성한 모든 폴더 조회
@@ -69,5 +65,14 @@ public class FolderRestController {
                 isAsc,
                 userDetails.getUser()
         );
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<?> handleException(IllegalArgumentException ex) {
+        RestApiException restApiException = new RestApiException();
+        restApiException.setHttpStatus(HttpStatus.BAD_REQUEST);
+        restApiException.setErrorMessge(ex.getMessage());
+
+        return ResponseEntity.badRequest().body(restApiException);
     }
 }
