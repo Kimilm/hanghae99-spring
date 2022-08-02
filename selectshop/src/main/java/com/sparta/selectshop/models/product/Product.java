@@ -5,6 +5,7 @@ import com.sparta.selectshop.models.folder.Folder;
 import com.sparta.selectshop.models.item.ItemDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Product extends Timestamped {
     @Id

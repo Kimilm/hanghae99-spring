@@ -10,9 +10,7 @@ import com.sparta.selectshop.repository.FolderRepository;
 import com.sparta.selectshop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,7 +19,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class ProductService {
 
-    private static final int MIN_MY_PRICE = 100;
+    public static final int MIN_MY_PRICE = 100;
 
     private final ProductRepository productRepository;
     private final FolderRepository folderRepository;
