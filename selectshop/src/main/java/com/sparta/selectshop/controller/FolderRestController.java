@@ -66,13 +66,4 @@ public class FolderRestController {
                 userDetails.getUser()
         );
     }
-
-    @ExceptionHandler({IllegalArgumentException.class})
-    public ResponseEntity<?> handleException(IllegalArgumentException ex) {
-        RestApiException restApiException = new RestApiException();
-        restApiException.setHttpStatus(HttpStatus.BAD_REQUEST);
-        restApiException.setErrorMessge(ex.getMessage());
-
-        return ResponseEntity.badRequest().body(restApiException);
-    }
 }
