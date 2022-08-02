@@ -15,6 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
 
+    private static final int MIN_MY_PRICE = 100;
+
     private final ProductRepository productRepository;
 
     public List<Product> getProducts(Long userId) {
@@ -27,6 +29,12 @@ public class ProductService {
 
     @Transactional
     public Long update(Long id, ProductMypriceRequestDto requestDto) {
+        int myprice = requestDto.getMyprice();
+
+        if (myprice < MIN_MY_PRICE) {
+            throw new IllegalArgumentException("유효하지 않은 관심가격, 최소: " + MIN_MY_PRICE);
+        }
+
         Product product = productRepository.findById(id).orElseThrow(
                 () -> new NullPointerException("아이디가 존재하지 않습니다.")
         );
