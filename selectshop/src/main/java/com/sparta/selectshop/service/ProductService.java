@@ -33,7 +33,7 @@ public class ProductService {
             String sortBy,
             boolean isAsc
     ) {
-        Pageable pageable = createPageRequest(page, size, sortBy, isAsc);
+        Pageable pageable = PageUtils.createPageRequest(page, size, sortBy, isAsc);
         return productRepository.findAll(pageable);
     }
 
@@ -45,16 +45,8 @@ public class ProductService {
             boolean isAsc,
             Long userId
     ) {
-        Pageable pageable = createPageRequest(page, size, sortBy, isAsc);
+        Pageable pageable = PageUtils.createPageRequest(page, size, sortBy, isAsc);
         return productRepository.findAllByUserId(userId, pageable);
-    }
-
-    // 페이징 객체 생성
-    private Pageable createPageRequest(int page, int size, String sortBy, boolean isAsc) {
-        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Sort sort = Sort.by(direction, sortBy);
-
-        return PageRequest.of(page, size, sort);
     }
 
     // 생성
