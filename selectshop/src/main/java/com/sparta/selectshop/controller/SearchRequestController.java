@@ -1,6 +1,7 @@
 package com.sparta.selectshop.controller;
 
 import com.sparta.selectshop.models.item.ItemDto;
+import com.sparta.selectshop.service.ItemSearchService;
 import com.sparta.selectshop.utils.NaverShopSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +14,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SearchRequestController {
 
-    private final NaverShopSearch naverShopSearch;
+    private final ItemSearchService itemSearchService;
 
     @GetMapping("/api/search")
     public List<ItemDto> execSearch(@RequestParam String query) {
-        String resultString = naverShopSearch.search(query);
-        return naverShopSearch.fromJsonToItems(resultString);
+        return itemSearchService.getItems(query);
     }
 }
