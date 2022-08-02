@@ -43,6 +43,9 @@ public class Product extends Timestamped {
     private List<Folder> folderList = new ArrayList<>();
 
     public Product(ProductRequestDto requestDto, Long userId) {
+        // 검증
+        ProductValidator.validateProductInput(requestDto, userId);
+
         this.title = requestDto.getTitle();
         this.link = requestDto.getLink();
         this.lprice = requestDto.getLprice();
