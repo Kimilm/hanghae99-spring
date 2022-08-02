@@ -42,6 +42,11 @@ public class Application {
             signupRequestDto.setPassword("kimilm");
             signupRequestDto.setEmail("kimilm@kimilm.com");
 
+            SignupRequestDto signupRequestDto2 = new SignupRequestDto();
+            signupRequestDto2.setUsername("kimilmKakao");
+            signupRequestDto2.setPassword("kimilmKakao");
+            signupRequestDto2.setEmail("gnlfla7416@daum.net");
+
             SignupRequestDto signupRequestDtoAdmin = new SignupRequestDto();
             signupRequestDtoAdmin.setUsername("kimilmAdmin");
             signupRequestDtoAdmin.setPassword("kimilmAdmin");
@@ -50,6 +55,7 @@ public class Application {
             signupRequestDtoAdmin.setAdminToken("AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC");
 
             userService.registerUser(signupRequestDto);
+            userService.registerUser(signupRequestDto2);
             userService.registerUser(signupRequestDtoAdmin);
 
             /*
