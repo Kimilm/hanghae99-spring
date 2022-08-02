@@ -1,14 +1,15 @@
 package com.sparta.selectshop.testdata;
 
 import com.sparta.selectshop.controller.SearchRequestController;
+import com.sparta.selectshop.models.folder.Folder;
 import com.sparta.selectshop.models.item.ItemDto;
 import com.sparta.selectshop.models.product.Product;
 import com.sparta.selectshop.models.user.User;
 import com.sparta.selectshop.models.user.UserRoleEnum;
+import com.sparta.selectshop.repository.FolderRepository;
 import com.sparta.selectshop.repository.ProductRepository;
 import com.sparta.selectshop.repository.UserRepository;
 import com.sparta.selectshop.security.model.UserDetailsImpl;
-import com.sparta.selectshop.service.ItemSearchService;
 import com.sparta.selectshop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
@@ -37,7 +38,7 @@ public class TestDataRunner implements ApplicationRunner {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final ItemSearchService itemSearchService;
+    private final FolderRepository folderRepository;
 
     private final SearchRequestController searchRequestController;
 
@@ -104,6 +105,9 @@ public class TestDataRunner implements ApplicationRunner {
         }
 
         productRepository.saveAll(productList);
+
+        Folder folder = new Folder(searchWord, user);
+        folderRepository.save(folder);
     }
 
     public int getRandomNumber(int min, int max) {
