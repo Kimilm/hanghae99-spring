@@ -2,6 +2,7 @@ package com.sparta.selectshop.controller;
 
 import com.sparta.selectshop.models.folder.Folder;
 import com.sparta.selectshop.models.folder.FolderRequestDto;
+import com.sparta.selectshop.models.folder.FolderResponseDto;
 import com.sparta.selectshop.models.product.Product;
 import com.sparta.selectshop.models.user.User;
 import com.sparta.selectshop.security.model.UserDetailsImpl;
@@ -12,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,14 +23,17 @@ public class FolderRestController {
 
     // 폴더 생성
     @PostMapping("/api/folders")
-    public List<Folder> addFolders(
+    public List<FolderResponseDto> addFolders(
             @RequestBody FolderRequestDto requestDto,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
         List<String> folderNames = requestDto.getFolderNames();
         User user = userDetails.getUser();
 
-        List<Folder> folders = folderService.addFolders(folderNames, user);
+        List<FolderResponseDto> folders = folderService.addFolders(folderNames, user).stream()
+                .map(FolderResponseDto::new)
+                .collect(Collectors.toList());
+
         return folders;
     }
 
