@@ -1,11 +1,13 @@
 package com.sparta.selectshop.models.product;
 
 import com.sparta.selectshop.models.Timestamped;
+import com.sparta.selectshop.models.folder.Folder;
 import com.sparta.selectshop.models.item.ItemDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,6 +36,10 @@ public class Product extends Timestamped {
     @Column(nullable = false)
     private Long userId;
 
+    @ManyToMany
+    @JoinColumn(name = "FOLDER_ID")
+    private List<Folder> folderList;
+
     public Product(ProductRequestDto requestDto, Long userId) {
         this.title = requestDto.getTitle();
         this.link = requestDto.getLink();
@@ -49,5 +55,9 @@ public class Product extends Timestamped {
 
     public void updateByItemDto(ItemDto itemDto) {
         this.lprice = itemDto.getLprice();
+    }
+
+    public void addFolder(Folder folder) {
+        this.folderList.add(folder);
     }
 }

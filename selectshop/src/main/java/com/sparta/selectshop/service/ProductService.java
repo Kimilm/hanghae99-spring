@@ -1,9 +1,12 @@
 package com.sparta.selectshop.service;
 
+import com.sparta.selectshop.models.folder.Folder;
 import com.sparta.selectshop.models.item.ItemDto;
 import com.sparta.selectshop.models.product.Product;
 import com.sparta.selectshop.models.product.ProductMypriceRequestDto;
 import com.sparta.selectshop.models.product.ProductRequestDto;
+import com.sparta.selectshop.models.user.User;
+import com.sparta.selectshop.repository.FolderRepository;
 import com.sparta.selectshop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,7 @@ public class ProductService {
     private static final int MIN_MY_PRICE = 100;
 
     private final ProductRepository productRepository;
+    private final FolderRepository folderRepository;
 
     // (관리자) 전체 회원 관심상품 조회
     public Page<Product> getAllProducts(
@@ -82,5 +86,24 @@ public class ProductService {
         );
         product.updateByItemDto(itemDto);
         return id;
+    }
+
+    @Transactional
+    public Product addFolder(Long productId, Long folderId, User user) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NullPointerException("해당 상품 아이디가 존재하지 않습니다."));
+
+        Folder folder = folderRepository.findById(folderId)
+                .orElseThrow(() -> new NullPointerException("해당 폴더 아이디가 존재하지 않습니다."));
+
+        Long loginUserId = user.getId();
+
+        if (!product.getUserId().equals(loginUserId) || !folder.getUser().getId().equals(loginUserId)) {
+            throw new IllegalArgumentException("회원님의 관심상품이 아니거나, 회원님의 폴더가 아닙니다.");
+        }
+
+        product.addFolder(folder);
+
+        return product;
     }
 }

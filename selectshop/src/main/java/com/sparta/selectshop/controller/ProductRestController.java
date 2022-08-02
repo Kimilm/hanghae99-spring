@@ -3,6 +3,7 @@ package com.sparta.selectshop.controller;
 import com.sparta.selectshop.models.product.Product;
 import com.sparta.selectshop.models.product.ProductMypriceRequestDto;
 import com.sparta.selectshop.models.product.ProductRequestDto;
+import com.sparta.selectshop.models.user.User;
 import com.sparta.selectshop.models.user.UserRoleEnum;
 import com.sparta.selectshop.security.model.UserDetailsImpl;
 import com.sparta.selectshop.service.ProductService;
@@ -63,6 +64,19 @@ public class ProductRestController {
     @PutMapping("/api/products/{id}")
     public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto requestDto) {
         return productService.update(id, requestDto);
+    }
+
+    // 상품에 폴더 추가
+    @PostMapping("/api/products/{productId}/folder")
+    public Long addFolder(
+            @PathVariable Long productId,
+            @RequestParam Long folderId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        User user = userDetails.getUser();
+        Product product = productService.addFolder(productId, folderId, user);
+
+        return product.getId();
     }
 
 }
