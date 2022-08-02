@@ -3,11 +3,13 @@ package com.sparta.selectshop.models.user;
 import com.sparta.selectshop.models.Timestamped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity(name = "users")
 @Getter
+@Setter
 @NoArgsConstructor
 public class User extends Timestamped {
     @Id

@@ -109,16 +109,24 @@ public class KakaoUserService {
         User kakaoUser = userRepository.findByKakaoId(kakaoId).orElse(null);
 
         if (kakaoUser == null) {
-            // 회원가입
-            String nickname = kakaoUserInfo.getNickname();
-            // 폼 로그인을 통해 로그인 되지 않도록 랜덤 생성 문자열 UUID 설정
-            String password = UUID.randomUUID().toString();
-            String encodedPassword = passwordEncoder.encode(password);
+            kakaoUser = userRepository.findByEmail(kakaoUserInfo.getEmail()).orElse(null);
 
-            String email = kakaoUserInfo.getEmail();
-            UserRoleEnum role = UserRoleEnum.USER;
+            if (kakaoUser != null) {
+                kakaoUser.setKakaoId(kakaoId);
+            } else {
+                // 회원가입
+                String nickname = kakaoUserInfo.getNickname();
+                // 폼 로그인을 통해 로그인 되지 않도록 랜덤 생성 문자열 UUID 설정
+                String password = UUID.randomUUID().toString();
+                String encodedPassword = passwordEncoder.encode(password);
 
-            kakaoUser = userRepository.save(new User(nickname, encodedPassword, email, role, kakaoId));
+                String email = kakaoUserInfo.getEmail();
+                UserRoleEnum role = UserRoleEnum.USER;
+
+                kakaoUser = userRepository.save(new User(nickname, encodedPassword, email, role, kakaoId));
+            }
+
+            userRepository.save(kakaoUser);
         }
 
         return kakaoUser;
