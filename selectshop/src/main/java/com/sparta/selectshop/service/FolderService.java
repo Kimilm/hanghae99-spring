@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +28,18 @@ public class FolderService {
 
     // 유저 아이디로 폴더 생성
     public List<Folder> addFolders(List<String> folderNames, User user) {
-        List<Folder> folderList = folderNames.stream()
-                .map(name -> new Folder(name, user))
-                .collect(Collectors.toList());
+        // 유저의 입력값에서 중복 제거
+        folderNames = folderNames.stream().distinct().collect(Collectors.toList());
+        // 회원이 기존에 생성한 폴더 리스트
+        List<Folder> existFolderList = folderRepository.findAllByUserAndNameIn(user, folderNames);
+        List<Folder> folderList = new ArrayList<>();
+
+        for (String folderName : folderNames) {
+            if (!isExistFolderName(folderName, existFolderList)) {
+                Folder folder = new Folder(folderName, user);
+                folderList.add(folder);
+            }
+        }
 
         return folderRepository.saveAll(folderList);
     }
@@ -45,5 +55,15 @@ public class FolderService {
     ) {
         Pageable pageable = PageUtils.createPageRequest(page, size, sortBy, isAsc);
         return productRepository.findAllByUserIdAndFolderList_Id(user.getId(), folderId, pageable);
+    }
+    
+    private boolean isExistFolderName(String folderName, List<Folder> existFolderList) {
+        for (Folder folder : existFolderList) {
+            if (folder.getName().equals(folderName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
