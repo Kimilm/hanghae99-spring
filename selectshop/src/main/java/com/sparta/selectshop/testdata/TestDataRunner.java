@@ -44,40 +44,40 @@ public class TestDataRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        // 테스트 User 생성
-        User testUser1 = new User("정국", passwordEncoder.encode("123"), "jg@sparta.com", UserRoleEnum.USER);
-        User testUser2 = new User("제이홉", passwordEncoder.encode("123"), "hope@sparta.com", UserRoleEnum.USER);
-        User testAdminUser1 = new User("아미", passwordEncoder.encode("123"), "army@sparta.com", UserRoleEnum.ADMIN);
-        testUser1 = userRepository.save(testUser1);
-        testUser2 = userRepository.save(testUser2);
-        testAdminUser1 = userRepository.save(testAdminUser1);
-
-        // testUser1 강제 로그인 처리
-        UserDetails userDetails = new UserDetailsImpl(testUser1);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        List<User> testUserList = new ArrayList<>();
-
-        testUserList.add(new User("kimilm", passwordEncoder.encode("kimilm"), "kimilm@kimilm.com", UserRoleEnum.USER));
-        testUserList.add(new User("kimilmKakao", passwordEncoder.encode("kimilmKakao"), "gnlfla7416@daum.net", UserRoleEnum.USER));
-        testUserList.add(new User("kimilmAdmin", passwordEncoder.encode("kimilmAdmin"), "kimilmAdmin@kimilm.com", UserRoleEnum.ADMIN));
-
-        testUserList = userRepository.saveAll(testUserList);
-
-        // 테스트 User 의 관심상품 등록
-        // 검색어 당 관심상품 10개 등록
-        createTestData(testUser1, "신발");
-        createTestData(testUser1, "과자");
-        createTestData(testUser1, "키보드");
-        createTestData(testUser1, "휴지");
-        createTestData(testUser1, "휴대폰");
-        createTestData(testUser1, "앨범");
-        createTestData(testUser1, "헤드폰");
-        createTestData(testUser1, "이어폰");
-        createTestData(testUser1, "노트북");
-        createTestData(testUser1, "무선 이어폰");
-        createTestData(testUser1, "모니터");
+//        // 테스트 User 생성
+//        User testUser1 = new User("정국", passwordEncoder.encode("123"), "jg@sparta.com", UserRoleEnum.USER);
+//        User testUser2 = new User("제이홉", passwordEncoder.encode("123"), "hope@sparta.com", UserRoleEnum.USER);
+//        User testAdminUser1 = new User("아미", passwordEncoder.encode("123"), "army@sparta.com", UserRoleEnum.ADMIN);
+//        testUser1 = userRepository.save(testUser1);
+//        testUser2 = userRepository.save(testUser2);
+//        testAdminUser1 = userRepository.save(testAdminUser1);
+//
+//        // testUser1 강제 로그인 처리
+//        UserDetails userDetails = new UserDetailsImpl(testUser1);
+//        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        List<User> testUserList = new ArrayList<>();
+//
+//        testUserList.add(new User("kimilm", passwordEncoder.encode("kimilm"), "kimilm@kimilm.com", UserRoleEnum.USER));
+//        testUserList.add(new User("kimilmKakao", passwordEncoder.encode("kimilmKakao"), "gnlfla7416@daum.net", UserRoleEnum.USER));
+//        testUserList.add(new User("kimilmAdmin", passwordEncoder.encode("kimilmAdmin"), "kimilmAdmin@kimilm.com", UserRoleEnum.ADMIN));
+//
+//        testUserList = userRepository.saveAll(testUserList);
+//
+//        // 테스트 User 의 관심상품 등록
+//        // 검색어 당 관심상품 10개 등록
+//        createTestData(testUser1, "신발");
+//        createTestData(testUser1, "과자");
+//        createTestData(testUser1, "키보드");
+//        createTestData(testUser1, "휴지");
+//        createTestData(testUser1, "휴대폰");
+//        createTestData(testUser1, "앨범");
+//        createTestData(testUser1, "헤드폰");
+//        createTestData(testUser1, "이어폰");
+//        createTestData(testUser1, "노트북");
+//        createTestData(testUser1, "무선 이어폰");
+//        createTestData(testUser1, "모니터");
     }
 
     private void createTestData(User user, String searchWord) {

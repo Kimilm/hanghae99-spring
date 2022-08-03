@@ -10,6 +10,7 @@ import com.sparta.selectshop.security.model.UserDetailsImpl;
 import com.sparta.selectshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,13 @@ public class ProductRestController {
     private final ProductService productService;
 
     private final ApiUseTimeRepository apiUseTimeRepository;
+
+    @GetMapping("/")
+    public ResponseEntity<?> headerTest() {
+        String token = "";
+        String body = "body";
+        return ResponseEntity.ok().header("AccessToken", token).body(body);
+    }
 
     /**
      * (관리자용) 전체 상품 조회
